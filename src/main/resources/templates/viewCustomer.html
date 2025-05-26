@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <title>View Customers</title>
+    <style>
+        h3 {
+            padding-top: 10px;
+            font-family:Times New roman;
+            text-align: center;
+        }
+        .center {
+            text-align: center;
+        }
+        .pagination{
+            display:flex;
+            justify-content: center;
+        }
+        body{
+             background: linear-gradient(to right, #74ebd5, #acb6e5);
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
+            <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+        </svg>
+        <a class="navbar-brand" href="#">Loan Management System</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/auth/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Register
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/auth/registerUser">Customer</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/auth/login/customer">Customer</a>
+                    <a class="dropdown-item" href="/officer/login">Loan Officer</a>
+                    <a class="dropdown-item" href="/auth/login/admin">Admin</a>
+
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h3>View All Customers</h3>
+<div class="container mt-4">
+    <form th:action="@{/auth/customers}" method="get" class="mb-3">
+        <div class="row">
+            <div class="col-md-3">
+                <select class="form-control" name="searchType">
+                    <option value="" th:selected="${searchType == null or searchType == ''}">All</option>
+                    <option value="email" th:selected="${searchType == 'email'}">Email</option>
+                    <option value="pancard" th:selected="${searchType == 'pancard'}">PAN Card</option>
+                    <option value="aadharcard" th:selected="${searchType == 'aadharcard'}">Aadhar Card</option>
+                </select>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" name="searchValue" th:value="${searchValue}" placeholder="Search">
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Pan Card</th>
+            <th>Aadhar Card</th>
+            <th>Contact</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="customer : ${customerPage.content}">
+            <td th:text="${customer.name}"></td>
+            <td th:text="${customer.email}"></td>
+            <td th:text="${customer.pancard}"></td>
+            <td th:text="${customer.aadharcard}"></td>
+            <td th:text="${customer.phoneNo}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="pagination center">
+        <nav>
+            <ul class="pagination">
+                <li class="page-item" th:classappend="${currentPage == 0} ? 'disabled'">
+                    <a class="page-link" th:href="@{/auth/customers(page=${currentPage - 1}, searchType=${searchType}, searchValue=${searchValue})}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    th:classappend="${i == currentPage} ? 'active'">
+                    <a class="page-link" th:href="@{/auth/customers(page=${i}, searchType=${searchType}, searchValue=${searchValue})}" th:text="${i + 1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${currentPage + 1 >= totalPages} ? 'disabled'">
+                    <a class="page-link" th:href="@{/auth/customers(page=${currentPage + 1}, searchType=${searchType}, searchValue=${searchValue})}">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="center">
+        <a href="/auth/admin/dash">Back to Admin dashboard</a>
+    </div>
+</div>
+
+</body>
+</html>
