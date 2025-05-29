@@ -5,35 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="df29905e-f228-409e-9ad3-2c0fff8fb72c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.gitignore.docx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/addOfficer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/addOfficer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/adminDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/adminDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/adminLogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/adminLogin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customerDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customerDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/customerLogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/customerLogin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/homePage.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/homePage.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/loanAmount.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/loanAmount.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/loanStatus.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/loanStatus.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/officerDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/officerDashboard.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/officerLogin.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/officerLogin.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/pendingLoans.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/pendingLoans.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/report.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/report.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/updateOfficer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/updateOfficer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/userReport.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/userReport.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/viewCustomer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/viewCustomer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/viewOfficer.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/viewOfficer.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/AuthControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/AuthControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/LoanControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/LoanControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/OfficerControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/OfficerControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/ReportControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/example/loan/controller/ReportControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,6 +45,7 @@
     "JUnit.LoanControllerTest.executor": "Run",
     "JUnit.OfficerControllerTest.executor": "Run",
     "Maven.Loan_Management_System [clean,install].executor": "Run",
+    "Maven.Loan_Management_System [clean,package].executor": "Run",
     "Maven.Loan_Management_System [clean].executor": "Run",
     "Maven.Loan_Management_System [install].executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
@@ -99,6 +78,7 @@
       <command value="mvn clean" />
       <command value="mvn install" />
       <command value="mvn clean install" />
+      <command value="mvn clean package" />
     </option>
   </component>
   <component name="RunManager" selected="Application.Main">
@@ -183,6 +163,7 @@
     <option featureType="dependencySupport" implementationName="java:org.springframework:spring-core" />
     <option featureType="dependencySupport" implementationName="java:junit:junit" />
     <option featureType="dependencySupport" implementationName="java:org.springframework.security:spring-security-core" />
+    <option featureType="com.intellij.fileTypeFactory" implementationName="Dockerfile" />
     <option featureType="dependencySupport" implementationName="java:jakarta.persistence:jakarta.persistence-api" />
     <option featureType="dependencySupport" implementationName="java:org.springframework.data:spring-data-commons" />
     <option featureType="dependencySupport" implementationName="java:org.thymeleaf:thymeleaf" />

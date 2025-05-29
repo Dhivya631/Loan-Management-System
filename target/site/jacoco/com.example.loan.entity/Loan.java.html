@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Loan.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Loan_Management_System</a> &gt; <a href="index.source.html" class="el_package">com.example.loan.entity</a> &gt; <span class="el_source">Loan.java</span></div><h1>Loan.java</h1><pre class="source lang-java linenums">package com.example.loan.entity;
+
+import jakarta.persistence.*;
+import lombok.Data;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import java.util.UUID;
+
+@Entity
+@Table(name = &quot;loans&quot;)
+@Data
+public class Loan {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.UUID)
+    private UUID id;
+
+    @ManyToOne
+    @JoinColumn(name=&quot;user_id&quot;)
+    @JdbcTypeCode(SqlTypes.UUID)
+    private User user;
+
+    private String address;
+    private Double amount;
+    private Double monthlyIncome;
+    private Double otherExpenses;
+    private Integer tenure;
+    private Double emi;
+    private Integer loanApprovalScore;
+    private String status;
+    private String previousStatus;
+    private String remarks;
+    @ManyToOne
+    @JoinColumn(name=&quot;officer_id&quot;)
+    private Officer assignedOfficer;
+
+    public UUID getId() {
+<span class="fc" id="L39">        return id;</span>
+    }
+
+    public void setId(UUID id) {
+<span class="fc" id="L43">        this.id = id;</span>
+<span class="fc" id="L44">    }</span>
+
+    public User getUser() {
+<span class="fc" id="L47">        return user;</span>
+    }
+
+    public void setUser(User user) {
+<span class="fc" id="L51">        this.user = user;</span>
+<span class="fc" id="L52">    }</span>
+
+    public String getAddress() {
+<span class="fc" id="L55">        return address;</span>
+    }
+
+    public void setAddress(String address) {
+<span class="fc" id="L59">        this.address = address;</span>
+<span class="fc" id="L60">    }</span>
+
+    public Double getAmount() {
+<span class="fc" id="L63">        return amount;</span>
+    }
+
+    public void setAmount(Double amount) {
+<span class="fc" id="L67">        this.amount = amount;</span>
+<span class="fc" id="L68">    }</span>
+
+    public Double getMonthlyIncome() {
+<span class="fc" id="L71">        return monthlyIncome;</span>
+    }
+
+    public void setMonthlyIncome(Double monthlyIncome) {
+<span class="fc" id="L75">        this.monthlyIncome = monthlyIncome;</span>
+<span class="fc" id="L76">    }</span>
+
+    public Double getOtherExpenses() {
+<span class="fc" id="L79">        return otherExpenses;</span>
+    }
+
+    public void setOtherExpenses(Double otherExpenses) {
+<span class="fc" id="L83">        this.otherExpenses = otherExpenses;</span>
+<span class="fc" id="L84">    }</span>
+
+    public Integer getTenure() {
+<span class="fc" id="L87">        return tenure;</span>
+    }
+
+    public void setTenure(Integer tenure) {
+<span class="fc" id="L91">        this.tenure = tenure;</span>
+<span class="fc" id="L92">    }</span>
+
+    public Double getEmi() {
+<span class="fc" id="L95">        return emi;</span>
+    }
+
+    public void setEmi(Double emi) {
+<span class="fc" id="L99">        this.emi = emi;</span>
+<span class="fc" id="L100">    }</span>
+
+    public Integer getLoanApprovalScore() {
+<span class="fc" id="L103">        return loanApprovalScore;</span>
+    }
+
+    public void setLoanApprovalScore(Integer loanApprovalScore) {
+<span class="fc" id="L107">        this.loanApprovalScore = loanApprovalScore;</span>
+<span class="fc" id="L108">    }</span>
+
+    public String getStatus() {
+<span class="fc" id="L111">        return status;</span>
+    }
+
+    public void setStatus(String status) {
+<span class="fc" id="L115">        this.status = status;</span>
+<span class="fc" id="L116">    }</span>
+
+    public String getPreviousStatus() {
+<span class="fc" id="L119">        return previousStatus;</span>
+    }
+
+    public void setPreviousStatus(String previousStatus) {
+<span class="fc" id="L123">        this.previousStatus = previousStatus;</span>
+<span class="fc" id="L124">    }</span>
+
+    public String getRemarks() {
+<span class="fc" id="L127">        return remarks;</span>
+    }
+
+    public void setRemarks(String remarks) {
+<span class="fc" id="L131">        this.remarks = remarks;</span>
+<span class="fc" id="L132">    }</span>
+
+    public Officer getAssignedOfficer() {
+<span class="fc" id="L135">        return assignedOfficer;</span>
+    }
+
+    public void setAssignedOfficer(Officer assignedOfficer) {
+<span class="fc" id="L139">        this.assignedOfficer = assignedOfficer;</span>
+<span class="fc" id="L140">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ReportController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Loan_Management_System</a> &gt; <a href="index.source.html" class="el_package">com.example.loan.controller</a> &gt; <span class="el_source">ReportController.java</span></div><h1>ReportController.java</h1><pre class="source lang-java linenums">package com.example.loan.controller;
+
+import com.example.loan.dto.LoanSummaryDto;
+import com.example.loan.entity.Loan;
+import com.example.loan.entity.Officer;
+import com.example.loan.entity.User;
+import com.example.loan.service.LoanService;
+import com.example.loan.service.OfficerService;
+import com.example.loan.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@Controller
+@RequestMapping(&quot;/reports&quot;)
+<span class="fc" id="L33">public class ReportController {</span>
+
+<span class="fc" id="L35">    private static final Logger logger = LoggerFactory.getLogger(ReportController.class);</span>
+
+    @Autowired
+    private LoanService loanService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private OfficerService officerService;
+
+    @Autowired
+    private ResourceLoader resourceLoader;
+
+    @GetMapping(&quot;/loan&quot;)
+    public String showReportPage(Model model) {
+<span class="fc" id="L49">        return &quot;report&quot;;</span>
+    }
+    @GetMapping(&quot;/user&quot;)
+    public String showUserPage(){
+<span class="fc" id="L53">        return &quot;userReport&quot;;</span>
+    }
+    @GetMapping(&quot;/officer&quot;)
+    public String getShowOfficerPage(){
+<span class="fc" id="L57">        return &quot;officerReport&quot;;</span>
+    }
+    @GetMapping(&quot;/loan-summary/pdf&quot;)
+    public void generatePdfReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L62">            List&lt;Loan&gt; loans = loanService.getAllLoans();</span>
+<span class="fc" id="L63">            logger.debug(&quot;Get all loan details are: &quot;+loans);</span>
+<span class="fc" id="L64">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loans);</span>
+
+<span class="fc" id="L66">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/loan-summary.jrxml&quot;);</span>
+<span class="fc" id="L67">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L69">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L70">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L72">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L74">            response.setContentType(&quot;application/pdf&quot;);</span>
+<span class="fc" id="L75">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=loan-summary.pdf&quot;);</span>
+<span class="fc" id="L76">            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());</span>
+<span class="fc" id="L77">            logger.info(&quot;PDF report generated successfully.&quot;);</span>
+<span class="nc" id="L78">        } catch (Exception e) {</span>
+<span class="nc" id="L79">            logger.error(&quot;Error generating PDF report: &quot;, e);</span>
+<span class="nc" id="L80">            throw new RuntimeException(&quot;Failed to generate PDF report&quot;);</span>
+<span class="fc" id="L81">        }</span>
+<span class="fc" id="L82">    }</span>
+    @GetMapping(&quot;/loan-summary/excel&quot;)
+    public void generateExcelReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L86">            List&lt;Loan&gt; loans = loanService.getAllLoans();</span>
+<span class="fc" id="L87">            logger.debug(&quot;Get all loan details are: &quot;+loans);</span>
+<span class="fc" id="L88">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(loans);</span>
+
+<span class="fc" id="L90">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/loan-summary.jrxml&quot;);</span>
+<span class="fc" id="L91">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L93">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L94">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L96">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L98">            response.setContentType(&quot;application/vnd.ms-excel&quot;);</span>
+<span class="fc" id="L99">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=loan-summary.xls&quot;);</span>
+
+<span class="fc" id="L101">            JRXlsExporter exporter = new JRXlsExporter();</span>
+<span class="fc" id="L102">            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));</span>
+<span class="fc" id="L103">            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));</span>
+
+<span class="fc" id="L105">            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();</span>
+<span class="fc" id="L106">            configuration.setOnePagePerSheet(true);</span>
+<span class="fc" id="L107">            configuration.setRemoveEmptySpaceBetweenRows(true);</span>
+<span class="fc" id="L108">            exporter.setConfiguration(configuration);</span>
+
+<span class="fc" id="L110">            exporter.exportReport();</span>
+<span class="fc" id="L111">            logger.info(&quot;Excel report generated successfully.&quot;);</span>
+<span class="nc" id="L112">        } catch (Exception e) {</span>
+<span class="nc" id="L113">            logger.error(&quot;Error generating Excel report: &quot;, e);</span>
+<span class="nc" id="L114">            throw new RuntimeException(&quot;Failed to generate Excel report&quot;);</span>
+<span class="fc" id="L115">        }</span>
+<span class="fc" id="L116">    }</span>
+    @GetMapping(&quot;/user-summary/pdf&quot;)
+    public void generateUserPdfReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L120">            List&lt;User&gt; user = userService.getAllUser();</span>
+<span class="fc" id="L121">            logger.debug(&quot;Get all user details are: &quot;+user);</span>
+<span class="fc" id="L122">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(user);</span>
+
+<span class="fc" id="L124">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/user-summary.jrxml&quot;);</span>
+<span class="fc" id="L125">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L127">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L128">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L130">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L132">            response.setContentType(&quot;application/pdf&quot;);</span>
+<span class="fc" id="L133">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=user-summary.pdf&quot;);</span>
+<span class="fc" id="L134">            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());</span>
+<span class="fc" id="L135">            logger.info(&quot;PDF report generated successfully.&quot;);</span>
+<span class="nc" id="L136">        } catch (Exception e) {</span>
+<span class="nc" id="L137">            logger.error(&quot;Error generating PDF report: &quot;, e);</span>
+<span class="nc" id="L138">            throw new RuntimeException(&quot;Failed to generate PDF report&quot;);</span>
+<span class="fc" id="L139">        }</span>
+<span class="fc" id="L140">    }</span>
+
+    @GetMapping(&quot;/user-summary/excel&quot;)
+    public void generateUserExcelReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L145">            List&lt;User&gt; user=userService.getAllUser();</span>
+<span class="fc" id="L146">            logger.debug(&quot;Get all user details are: &quot;+user);</span>
+<span class="fc" id="L147">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(user);</span>
+<span class="fc" id="L148">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/user-summary.jrxml&quot;);</span>
+<span class="fc" id="L149">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L151">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L152">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L154">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L156">            response.setContentType(&quot;application/vnd.ms-excel&quot;);</span>
+<span class="fc" id="L157">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=user-summary.xls&quot;);</span>
+
+<span class="fc" id="L159">            JRXlsExporter exporter = new JRXlsExporter();</span>
+<span class="fc" id="L160">            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));</span>
+<span class="fc" id="L161">            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));</span>
+
+<span class="fc" id="L163">            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();</span>
+<span class="fc" id="L164">            configuration.setOnePagePerSheet(true);</span>
+<span class="fc" id="L165">            configuration.setRemoveEmptySpaceBetweenRows(true);</span>
+<span class="fc" id="L166">            exporter.setConfiguration(configuration);</span>
+
+<span class="fc" id="L168">            exporter.exportReport();</span>
+<span class="fc" id="L169">            logger.info(&quot;Excel report generated successfully.&quot;);</span>
+<span class="nc" id="L170">        } catch (Exception e) {</span>
+<span class="nc" id="L171">            logger.error(&quot;Error generating Excel report: &quot;,</span>
+                    e);
+<span class="nc" id="L173">            throw new RuntimeException(&quot;Failed to generate Excel report&quot;);</span>
+<span class="fc" id="L174">        }</span>
+<span class="fc" id="L175">    }</span>
+    @GetMapping(&quot;/officer-summary/pdf&quot;)
+    public void generateOfficerPdfReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L179">            List&lt;Officer&gt; officers=officerService.getAllOfficer();</span>
+<span class="fc" id="L180">            logger.debug(&quot;Get all loan officer details are: &quot;+officers);</span>
+<span class="fc" id="L181">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(officers);</span>
+
+<span class="fc" id="L183">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/officer-summary.jrxml&quot;);</span>
+<span class="fc" id="L184">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L186">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L187">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L189">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L191">            response.setContentType(&quot;application/pdf&quot;);</span>
+<span class="fc" id="L192">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=officer-summary.pdf&quot;);</span>
+<span class="fc" id="L193">            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());</span>
+<span class="fc" id="L194">            logger.info(&quot;PDF report generated successfully.&quot;);</span>
+<span class="nc" id="L195">        } catch (Exception e) {</span>
+<span class="nc" id="L196">            logger.error(&quot;Error generating PDF report: &quot;, e);</span>
+<span class="nc" id="L197">            throw new RuntimeException(&quot;Failed to generate PDF report&quot;);</span>
+<span class="fc" id="L198">        }</span>
+<span class="fc" id="L199">    }</span>
+
+    @GetMapping(&quot;/officer-summary/excel&quot;)
+    public void generateOfficerExcelReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L204">            List&lt;Officer&gt; officers = officerService.getAllOfficer();</span>
+<span class="fc" id="L205">            logger.debug(&quot;Get all loan officer details are: &quot;+officers);</span>
+<span class="fc" id="L206">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(officers);</span>
+
+<span class="fc" id="L208">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/officer-summary.jrxml&quot;);</span>
+<span class="fc" id="L209">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L211">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L212">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L214">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L216">            response.setContentType(&quot;application/vnd.ms-excel&quot;);</span>
+<span class="fc" id="L217">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=officer-summary.xls&quot;);</span>
+
+<span class="fc" id="L219">            JRXlsExporter exporter = new JRXlsExporter();</span>
+<span class="fc" id="L220">            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));</span>
+<span class="fc" id="L221">            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));</span>
+
+<span class="fc" id="L223">            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();</span>
+<span class="fc" id="L224">            configuration.setOnePagePerSheet(true);</span>
+<span class="fc" id="L225">            configuration.setRemoveEmptySpaceBetweenRows(true);</span>
+<span class="fc" id="L226">            exporter.setConfiguration(configuration);</span>
+
+<span class="fc" id="L228">            exporter.exportReport();</span>
+<span class="fc" id="L229">            logger.info(&quot;Excel report generated successfully.&quot;);</span>
+<span class="nc" id="L230">        } catch (Exception e) {</span>
+<span class="nc" id="L231">            logger.error(&quot;Error generating Excel report: &quot;,</span>
+                    e);
+<span class="nc" id="L233">            throw new RuntimeException(&quot;Failed to generate Excel report&quot;);</span>
+<span class="fc" id="L234">        }</span>
+<span class="fc" id="L235">    }</span>
+    @GetMapping(&quot;/amount-summary&quot;)
+    public String generateLoanSummaryReport(HttpServletResponse response) {
+<span class="fc" id="L238">        return &quot;loanAmount&quot;;</span>
+    }
+    @GetMapping(&quot;/amount-summary/pdf&quot;)
+    public void generateLoanAmountPdfReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L243">            List&lt;LoanSummaryDto&gt; summary = loanService.getLoanAmountSummary();</span>
+<span class="fc" id="L244">            logger.debug(&quot;Get all loan summary details are: &quot;+summary);</span>
+<span class="fc" id="L245">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(summary);</span>
+
+<span class="fc" id="L247">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/amount-summary.jrxml&quot;);</span>
+<span class="fc" id="L248">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L250">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L251">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L253">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L255">            response.setContentType(&quot;application/pdf&quot;);</span>
+<span class="fc" id="L256">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=amount-summary.pdf&quot;);</span>
+<span class="fc" id="L257">            JasperExportManager.exportReportToPdfStream(jasperPrint, response.getOutputStream());</span>
+<span class="nc" id="L258">        } catch (Exception e) {</span>
+<span class="nc" id="L259">            throw new RuntimeException(&quot;Failed to generate PDF report&quot;, e);</span>
+<span class="fc" id="L260">        }</span>
+<span class="fc" id="L261">    }</span>
+
+    @GetMapping(&quot;/amount-summary/excel&quot;)
+    public void generateLoanAmountExcelReport(HttpServletResponse response) {
+        try {
+<span class="fc" id="L266">            List&lt;LoanSummaryDto&gt; summary = loanService.getLoanAmountSummary();</span>
+<span class="fc" id="L267">            logger.debug(&quot;Get all loan summary details are: &quot;+summary);</span>
+<span class="fc" id="L268">            JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(summary);</span>
+
+<span class="fc" id="L270">            InputStream reportStream = getClass().getResourceAsStream(&quot;/reports/amount-summary.jrxml&quot;);</span>
+<span class="fc" id="L271">            JasperReport jasperReport = JasperCompileManager.compileReport(reportStream);</span>
+
+<span class="fc" id="L273">            Map&lt;String, Object&gt; parameters = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L274">            parameters.put(&quot;createdBy&quot;, &quot;Loan Management System&quot;);</span>
+
+<span class="fc" id="L276">            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);</span>
+
+<span class="fc" id="L278">            response.setContentType(&quot;application/vnd.ms-excel&quot;);</span>
+<span class="fc" id="L279">            response.setHeader(&quot;Content-Disposition&quot;, &quot;attachment; filename=amount-summary.xls&quot;);</span>
+
+<span class="fc" id="L281">            JRXlsExporter exporter = new JRXlsExporter();</span>
+<span class="fc" id="L282">            exporter.setExporterInput(new SimpleExporterInput(jasperPrint));</span>
+<span class="fc" id="L283">            exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(response.getOutputStream()));</span>
+
+<span class="fc" id="L285">            SimpleXlsReportConfiguration configuration = new SimpleXlsReportConfiguration();</span>
+<span class="fc" id="L286">            configuration.setOnePagePerSheet(true);</span>
+<span class="fc" id="L287">            configuration.setRemoveEmptySpaceBetweenRows(true);</span>
+<span class="fc" id="L288">            exporter.setConfiguration(configuration);</span>
+
+<span class="fc" id="L290">            exporter.exportReport();</span>
+<span class="nc" id="L291">        } catch (Exception e) {</span>
+<span class="nc" id="L292">            throw new RuntimeException(&quot;Failed to generate Excel report&quot;, e);</span>
+<span class="fc" id="L293">        }</span>
+<span class="fc" id="L294">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
