@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport
+        xmlns="http://jasperreports.sourceforge.net/jasperreports"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+        name="user-summary"
+        pageWidth="650"
+        pageHeight="842"
+        columnWidth="570"
+        leftMargin="40"
+        rightMargin="40"
+        topMargin="40"
+        bottomMargin="40">
+
+    <field name="name" class="java.lang.String"/>
+    <field name="username" class="java.lang.String"/>
+    <field name="email" class="java.lang.String"/>
+    <field name="phoneNo" class="java.lang.Long"/>
+    <field name="pancard" class="java.lang.String"/>
+    <field name="aadharcard" class="java.lang.String"/>
+    <field name="role" class="java.lang.String"/>
+    <title>
+        <band height="50">
+            <staticText>
+                <reportElement x="0" y="10" width="570" height="30"/>
+                <textElement textAlignment="Center">
+                    <font size="18" isBold="true"/>
+                </textElement>
+                <text><![CDATA[User Summary Report]]></text>
+            </staticText>
+        </band>
+    </title>
+    <columnHeader>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="80" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Name]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="80" y="0" width="80" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Username]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="160" y="0" width="150" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Email]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="310" y="0" width="60" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Phone No]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="370" y="0" width="70" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Pancard]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="440" y="0" width="70" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Aadharcard]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="510" y="0" width="60" height="20"/>
+                <box>
+                    <pen lineWidth="1.0" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center">
+                    <font isBold="true" size="12"/>
+                </textElement>
+                <text><![CDATA[Role]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+    <detail>
+        <band height="20">
+            <textField>
+                <reportElement x="0" y="0" width="80" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{name}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="80" y="0" width="80" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{username}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="160" y="0" width="150" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{email}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="310" y="0" width="60" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{phoneNo}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="370" y="0" width="70" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{pancard}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="440" y="0" width="70" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{aadharcard}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="510" y="0" width="60" height="20"/>
+                <box>
+                    <pen lineWidth="0.5" lineColor="#000"/>
+                </box>
+                <textElement textAlignment="Center"/>
+                <textFieldExpression><![CDATA[$F{role}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+    <pageFooter>
+        <band height="20">
+            <staticText>
+                <reportElement x="0" y="0" width="455" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isItalic="true"/>
+                </textElement>
+                <text><![CDATA[Generated on: ]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="455" y="0" width="115" height="20"/>
+                <textElement textAlignment="Right">
+                    <font size="10" isItalic="true"/>
+                </textElement>
+                <textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+            </textField>
+        </band>
+    </pageFooter>
+
+</jasperReport>

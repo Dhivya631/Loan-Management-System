@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Pending Loans</title>
+    <style>
+        h3 {
+            padding-top: 20px;
+            text-align: center;
+            font-family: Times New Roman;
+        }
+        .center {
+            text-align: center;
+        }
+        .remarks-input {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <svg xmlns="http://www.w3.org/2000/svg" width="35" height="30" fill="currentColor" class="bi bi-bank" viewBox="0 0 16 16">
+            <path d="m8 0 6.61 3h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.38l.5 2a.498.498 0 0 1-.485.62H.5a.498.498 0 0 1-.485-.62l.5-2A.5.5 0 0 1 1 13V6H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 3h.89zM3.777 3h8.447L8 1zM2 6v7h1V6zm2 0v7h2.5V6zm3.5 0v7h1V6zm2 0v7H12V6zM13 6v7h1V6zm2-1V4H1v1zm-.39 9H1.39l-.25 1h13.72z"/>
+        </svg>
+        <a class="navbar-brand" href="#">Loan Management System</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item active">
+                <a class="nav-link" href="/auth/home">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Register
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/auth/registerUser">Customer</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Login
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="/auth/login/customer">Customer</a>
+                    <a class="dropdown-item" href="/officer/login">Loan Officer</a>
+                    <a class="dropdown-item" href="/auth/login/admin">Admin</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+<h3>Pending Loans for Approval</h3><br>
+<div class="container mt-4">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Address</th>
+            <th>Amount</th>
+            <th>Monthly Income</th>
+            <th>Other Expenses</th>
+            <th>Tenure</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="loan : ${pendingLoans}">
+            <td th:text="${loan.id}"></td>
+            <td th:text="${loan.address}"></td>
+            <td th:text="${loan.amount}"></td>
+            <td th:text="${loan.monthlyIncome}"></td>
+            <td th:text="${loan.otherExpenses}"></td>
+            <td th:text="${loan.tenure}"></td>
+            <td>
+                <form th:action="@{/officer/decision}" method="post">
+                    <input type="hidden" name="loanId" th:value="${loan.id}">
+                    <input type="hidden" name="username" th:value="${officer.username}">
+                    <button type="submit" name="decision" value="APPROVE" class="btn btn-primary w-70">Approve</button>
+                    <button type="button" onclick="showRemarksInput(this)" class="btn btn-danger w-70">Reject</button>
+                    <div class="remarks-input">
+                        <input type="text" name="remarks" placeholder="Enter remarks for rejection" class="form-control">
+                        <button type="submit" name="decision" value="REJECT" class="btn btn-danger w-70 mt-2">Confirm Rejection</button>
+                    </div>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="center">
+        <a href="/officer/login">Back to officer login</a>
+    </div>
+</div>
+<script>
+    <!--    function showRemarksInput(button) {-->
+    <!--        const form = button.closest('form');-->
+    <!--        const remarksInput = form.querySelector('.remarks-input');-->
+    <!--        remarksInput.style.display = 'block';-->
+    <!--    }-->
+        function showRemarksInput(button) {
+            const form = button.closest('form');
+            const remarksInput = form.querySelector('.remarks-input');
+            const remarksField = remarksInput.querySelector('input[name="remarks"]');
+            remarksInput.style.display = 'block';
+            remarksField.setAttribute('required', true);
+        }
+
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function (event) {
+                const remarksInput = form.querySelector('.remarks-input');
+                const remarksField = form.querySelector('input[name="remarks"]');
+                if (remarksInput.style.display === 'block' && !remarksField.value.trim()) {
+                    event.preventDefault();
+                    alert('Please enter remarks for rejection.');
+               }
+            });
+        });
+</script>
+</body>
+</html>

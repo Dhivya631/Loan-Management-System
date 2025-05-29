@@ -17,6 +17,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -46,21 +46,21 @@ class AuthControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockitoBean
+    @MockBean
     private UserService userService;
 
-    @MockitoBean
+    @MockBean
     private AuthService authService;
 
-    @MockitoBean
+    @MockBean
     private AuthenticationManager authenticationManager;
-    @MockitoBean
+    @MockBean
     private JWTAuthenticationFilter jwtAuthenticationFilter;
-    @MockitoBean
+    @MockBean
     private JWTTokenProvider jwtTokenProvider;
-    @MockitoBean
+    @MockBean
     private UserRepository userRepository;
-    @MockitoBean
+    @MockBean
     private PasswordEncoder passwordEncoder;
     @InjectMocks
     private AuthController authController;

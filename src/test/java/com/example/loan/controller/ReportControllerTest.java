@@ -19,9 +19,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import java.util.List;
@@ -36,19 +36,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ReportControllerTest {
     @Autowired
     private MockMvc mockMvc;
-    @MockitoBean
+    @MockBean
     private AuthenticationManager authenticationManager;
-    @MockitoBean
+    @MockBean
     private JWTAuthenticationFilter jwtAuthenticationFilter;
-    @MockitoBean
+    @MockBean
     private JWTTokenProvider jwtTokenProvider;
-    @MockitoBean
+    @MockBean
     private OfficerRepository officerRepository;
-    @MockitoBean
+    @MockBean
     private LoanService loanService;
-    @MockitoBean
+    @MockBean
     private UserService userService;
-    @MockitoBean
+    @MockBean
     private OfficerService officerService;
     @InjectMocks
     private ReportController reportController;
