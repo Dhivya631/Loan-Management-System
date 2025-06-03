@@ -16,7 +16,7 @@ jobs:
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: loanappdb
+          POSTGRES_DB: loans
         ports:
           - 5432:5432
         options: >-
