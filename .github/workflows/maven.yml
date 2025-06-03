@@ -33,15 +33,18 @@ jobs:
       - name: Run tests
         run: mvn test
 
-      - name: Run Spring Boot app in background
-        run: nohup mvn spring-boot:run &
+      - name: Run Spring Boot app in background and log output
+        run: nohup mvn spring-boot:run > app.log 2>&1 &
 
       - name: Wait for app to start
-        run: sleep 30
+        run: sleep 60
+
+      - name: Show app logs
+        run: cat app.log
 
       - name: Test app endpoint
         run: curl --fail http://localhost:8083 || exit 1
-
+        
       - name: Build Docker image
         run: docker build -t loan-app:latest .
 
