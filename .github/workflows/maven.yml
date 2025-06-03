@@ -7,31 +7,11 @@ on:
     branches: [ main ]
 
 jobs:
-  build-and-push:
+  build-test-docker-run:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: loans
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    env:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/loans
-      SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: password123
-
     steps:
-      - name: Checkout repository
+      - name: Checkout source code
         uses: actions/checkout@v4
 
       - name: Set up Java 18
@@ -53,7 +33,32 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Push Docker image
+      - name: Push Docker image to Docker Hub
         run: |
-          docker tag loan-app:latest ${{ secrets.DOCKER_USERNAME }}/loan-app:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/loan-app:latest
+          docker tag loan-app:latest ${{ secrets.DOCKER_USERNAME }}/loanmanagement:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/loanmanagement:latest
+
+      - name: Step 1 - Pull Docker image
+        run: docker pull dhivyard/loanmanagement:latest
+
+      - name: Step 2 - Run PostgreSQL container
+        run: |
+          docker run -d --name my-postgres \
+            -e POSTGRES_USER=postgres \
+            -e POSTGRES_PASSWORD=password123 \
+            -e POSTGRES_DB=loans \
+            -p 5432:5432 postgres
+
+      - name: Step 3 - Run Loan Management container
+        run: |
+          docker run -d --name loan \
+            --link my-postgres:postgres \
+            -e SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/loans \
+            -e SPRING_DATASOURCE_USERNAME=postgres \
+            -e SPRING_DATASOURCE_PASSWORD=password123 \
+            -p 8083:8083 dhivyard/loanmanagement:latest
+
+      - name: Step 4 - Show Loan App Logs
+        run: |
+          CONTAINER_ID=$(docker ps -qf "name=loan")
+          docker logs $CONTAINER_ID
