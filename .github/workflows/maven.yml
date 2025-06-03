@@ -20,33 +20,29 @@ jobs:
           distribution: temurin
           java-version: 18
 
-      - name: Set up Maven
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 18
-          cache: maven
-
       - name: Build with Maven
-        run: mvn clean package
+        run: mvn clean package -DskipTests
 
       - name: Run tests
         run: mvn test
 
-      - name: Run Spring Boot app in background and log output
-        run: nohup mvn spring-boot:run > app.log 2>&1 &
+      - name: Build Docker image
+        run: docker build -t loan-app:latest .
+
+      - name: Run Docker container
+        run: |
+          docker run -d -p 8083:8083 --name loan-app-instance loan-app:latest
 
       - name: Wait for app to start
-        run: sleep 60
-
-      - name: Show app logs
-        run: cat app.log
+        run: sleep 30
 
       - name: Test app endpoint
         run: curl --fail http://localhost:8083 || exit 1
-        
-      - name: Build Docker image
-        run: docker build -t loan-app:latest .
+
+      - name: Stop and remove Docker container
+        run: |
+          docker stop loan-app-instance
+          docker rm loan-app-instance
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
