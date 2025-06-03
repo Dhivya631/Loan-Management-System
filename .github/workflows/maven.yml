@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Build with Maven
+      - name: Build with Maven (package only)
         run: mvn clean package -DskipTests
 
       - name: Run tests
@@ -47,7 +47,7 @@ jobs:
       - name: Test app endpoint
         run: curl --fail http://localhost:8083 || exit 1
 
-      - name: Show container logs (if needed for debugging)
+      - name: Show container logs (optional for debugging)
         run: docker logs loan-app-instance
 
       - name: Log in to Docker Hub
