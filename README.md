@@ -212,8 +212,8 @@ LoanManagementSystem/
       container_name: loan_postgres
       environment:
         POSTGRES_DB: loans
-        POSTGRES_USER: postgres
-        POSTGRES_PASSWORD: password123
+        POSTGRES_USER: ${DB_USERNAME}
+        POSTGRES_PASSWORD: ${DB_PASSWORD}
       ports:
         - "5433:5432"
       networks:
@@ -228,8 +228,8 @@ LoanManagementSystem/
         - "8083:8083"
       environment:
         SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/loans
-        SPRING_DATASOURCE_USERNAME: postgres
-        SPRING_DATASOURCE_PASSWORD: password123
+        SPRING_DATASOURCE_USERNAME: ${DB_USERNAME}
+        SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
         SPRING_JPA_HIBERNATE_DDL_AUTO: update
       networks:
         - loan-network
