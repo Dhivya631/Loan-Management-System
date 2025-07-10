@@ -19,7 +19,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://dpg-d1nlmdadbo4c73eobd00-a:5432/loans_ddnf
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/loans
       SPRING_DATASOURCE_USERNAME: ${{ secrets.DB_USERNAME }}
       SPRING_DATASOURCE_PASSWORD: ${{ secrets.DB_PASSWORD }}
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
