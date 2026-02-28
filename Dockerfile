@@ -1,5 +1,6 @@
-# Use official OpenJDK 18 image
+# Use official Eclipse 17 image
 FROM eclipse-temurin:17-jdk-alpine
+
 WORKDIR /app
 
 # Copy JAR to container and rename
