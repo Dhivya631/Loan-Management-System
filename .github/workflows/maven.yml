@@ -1,5 +1,8 @@
 name: Java CI with Maven and Docker
 
+permissions:
+  contents: read
+
 on:
   push:
     branches: [ main ]
