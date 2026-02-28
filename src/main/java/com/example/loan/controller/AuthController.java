@@ -141,7 +141,8 @@ public class AuthController {
             return ResponseEntity.ok("Updated password successfully");
         }
         catch (Exception e){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Unable to update password. Please check your input and try again.");
         }
     }
     @PostMapping("/update-user")

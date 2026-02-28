@@ -95,16 +95,22 @@ public class OfficerController {
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteOfficer(@PathVariable Long id){
-        logger.info("Given id for delete officer: "+id);
+        logger.info("Given id for delete officer: {}", id);
         try{
             officerService.deleteOfficerById(id);
             return ResponseEntity.ok("Officer deleted successfully");
         }
-        catch (EntityNotFoundException e){
-            logger.error("Error: "+e.getMessage());
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        catch (EntityNotFoundException ex){
+            logger.error("Officer not found for id: {}", id, ex);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Resource not found");
+        }
+        catch (Exception ex){
+            logger.error("Unexpected error while deleting officer with id: {}", id, ex);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("An unexpected error occurred");
         }
     }
+
     @GetMapping("/pending")
     public String viewPendingLoans(@RequestParam String username, Model model) {
         logger.info("Fetched username: "+username);
