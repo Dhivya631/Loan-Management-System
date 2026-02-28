@@ -34,7 +34,6 @@
                         console.log('JWT Token:', token);
                         localStorage.setItem('jwtToken', token);
                         localStorage.setItem('username', username);
-                        localStorage.setItem('password',password);
                         window.location.href='/auth/customer/dash';
                     })
                     .catch(error => {
