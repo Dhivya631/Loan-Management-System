@@ -1,5 +1,5 @@
 # Use official OpenJDK 18 image
-FROM openjdk:18
+FROM eclipse-temurin:17-jdk-alpine
 
 WORKDIR /app
 
