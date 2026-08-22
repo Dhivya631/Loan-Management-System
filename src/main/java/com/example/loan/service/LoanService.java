@@ -1,21 +1,22 @@
 package com.example.loan.service;
 
-import com.example.loan.dto.LoanSummaryDto;
-import com.example.loan.entity.Loan;
-import com.example.loan.entity.LoanApprovalResponse;
-import com.example.loan.entity.Officer;
-import com.example.loan.repository.LoanRepository;
-import com.example.loan.repository.OfficerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+import com.example.loan.dto.LoanSummaryDto;
+import com.example.loan.entity.Loan;
+import com.example.loan.entity.LoanApprovalResponse;
+import com.example.loan.entity.Officer;
+import com.example.loan.repository.LoanRepository;
+import com.example.loan.repository.OfficerRepository;
 
 @Service
 public class LoanService {

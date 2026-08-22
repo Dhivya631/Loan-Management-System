@@ -1,10 +1,11 @@
 package com.example.loan.repository;
 
-import com.example.loan.entity.Officer;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import com.example.loan.entity.Officer;
 
 @Repository
 public interface OfficerRepository extends JpaRepository<Officer,Long> {

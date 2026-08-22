@@ -1,8 +1,8 @@
 package com.example.loan.service;
 
-import com.example.loan.configuration.JWTTokenProvider;
-import com.example.loan.entity.User;
-import com.example.loan.repository.UserRepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.example.loan.configuration.JWTTokenProvider;
+import com.example.loan.entity.User;
+import com.example.loan.repository.UserRepository;
 
 @Service
 public class UserService {

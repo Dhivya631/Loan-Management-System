@@ -1,15 +1,16 @@
 package com.example.loan.repository;
 
-import com.example.loan.dto.LoanSummaryDto;
-import com.example.loan.entity.Loan;
-import com.example.loan.entity.Officer;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.UUID;
+import com.example.loan.dto.LoanSummaryDto;
+import com.example.loan.entity.Loan;
+import com.example.loan.entity.Officer;
 
 @Repository
 public interface LoanRepository extends JpaRepository<Loan, UUID> {

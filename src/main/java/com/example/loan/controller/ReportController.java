@@ -1,19 +1,10 @@
 package com.example.loan.controller;
 
-import com.example.loan.dto.LoanSummaryDto;
-import com.example.loan.entity.Loan;
-import com.example.loan.entity.Officer;
-import com.example.loan.entity.User;
-import com.example.loan.service.LoanService;
-import com.example.loan.service.OfficerService;
-import com.example.loan.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.*;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.JRXlsExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
-import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +14,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.example.loan.dto.LoanSummaryDto;
+import com.example.loan.entity.Loan;
+import com.example.loan.entity.Officer;
+import com.example.loan.entity.User;
+import com.example.loan.service.LoanService;
+import com.example.loan.service.OfficerService;
+import com.example.loan.service.UserService;
+
+import jakarta.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.JRXlsExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimpleXlsReportConfiguration;
 
 @Controller
 @RequestMapping("/reports")
